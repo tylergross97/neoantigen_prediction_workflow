@@ -1,0 +1,3 @@
+sample,fastq_1,fastq_2,patient,status
+SRR7890918,SRR7890918_1.fastq.gz,SRR7890918_2.fastq.gz,SEQC2,tumor
+SRR7890919,SRR7890919_1.fastq.gz,SRR7890919_2.fastq.gz,SEQC2,normal

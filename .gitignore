@@ -1,7 +1,11 @@
-
+# Ignore output and intermediate files
 results/
 work/
 .nextflow*
 *.log
-fastq/
+slurm*
 
+# Ignore fastq directory and all contents
+fastq/
+*.fastq
+*.fastq.gz
