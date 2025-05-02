@@ -4,6 +4,7 @@ work/
 .nextflow*
 *.log
 slurm*
+*.sif
 
 # Ignore fastq directory and all contents
 fastq/
