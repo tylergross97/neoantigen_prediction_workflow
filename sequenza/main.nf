@@ -7,13 +7,10 @@ include { FASTP } from './modules/fastp.nf'
 include { MULTIQC } from './modules/multiqc.nf'
 include { INDEX_HUMAN } from './modules/index_human.nf'
 include { BWAMEM2_ALIGN } from './modules/bwamem2_align.nf'
+include { BAM2SEQZ } from './modules/bam2seqz.nf'
 
 Channel
     .fromPath(params.fasta)
-    .map { fasta ->
-        def id = fasta.getBaseName().replaceFirst(/\.(fasta|fa|fna)$/, '')
-        tuple([ id: id ], fasta)
-    }
     .set { fasta_ch }
 
 // Create file pairs
@@ -27,4 +24,7 @@ workflow {
 	human_index = INDEX_HUMAN(params.fasta)
 	FASTP(reads_ch)
 	BWAMEM2_ALIGN(FASTP.out.trimmed_reads, human_index)
+	tumor_bam_ch = BWAMEM2_ALIGN.out.bam.filter { sample_id, _ -> sample_id == params.tumor_id }.map { _, bam -> bam }
+	normal_bam_ch = BWAMEM2_ALIGN.out.bam.filter { sample_id, _ -> sample_id == params.normal_id }.map { _, bam -> bam }
+	BAM2SEQZ(tumor_bam_ch, normal_bam_ch, GC_WIGGLE.out, fasta_ch)
 }

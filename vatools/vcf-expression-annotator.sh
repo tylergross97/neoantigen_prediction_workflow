@@ -44,4 +44,4 @@ chmod 755 "$TMPDIR" "$NXF_SINGULARITY_CACHEDIR"
 # Source your Nextflow setup script if needed
 source /projects/academic/rpili/tgross2/setup_nextflow_env.sh
 
-vcf-expression-annotator /projects/academic/rpili/Jonathan_Lovell_project/somatic_variant_calling_test/results/annotation/mutect2/SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030/SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030.mutect2.filtered_VEP.ann.vcf.gz expression_PV1_custom.tsv custom transcript --id-column transcript_id --expression-column PV1 -o SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030.mutect2.filtered_VEP.ann.tx.vcf.gz --ignore-ensembl-id-version 
+vcf-expression-annotator /projects/academic/rpili/Jonathan_Lovell_project/somatic_variant_calling_test/results/annotation/mutect2/SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030/SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030.mutect2.filtered_VEP.ann.vcf.gz expression_PV1_custom.tsv custom transcript --id-column transcript_id --expression-column PV1 -o SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030.mutect2.filtered_VEP.ann.tx.vcf.gz --ignore-ensembl-id-version -s PV1_SRX19052222_SRR23100029
