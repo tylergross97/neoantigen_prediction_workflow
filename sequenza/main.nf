@@ -7,7 +7,6 @@ include { FASTP } from './modules/fastp.nf'
 include { MULTIQC } from './modules/multiqc.nf'
 include { INDEX_HUMAN } from './modules/index_human.nf'
 include { BWAMEM2_ALIGN } from './modules/bwamem2_align.nf'
-include { SORT_BAM } from './modules/sort_bam.nf'
 
 Channel
     .fromPath(params.fasta)
@@ -28,5 +27,4 @@ workflow {
 	human_index = INDEX_HUMAN(params.fasta)
 	FASTP(reads_ch)
 	BWAMEM2_ALIGN(FASTP.out.trimmed_reads, human_index)
-	SORT_BAM(BWAMEM2_ALIGN.out.bam)
 }

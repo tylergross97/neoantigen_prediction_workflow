@@ -1,9 +1,13 @@
-# SEQC2 WES Analysis
+# Neoantigen Prediction
 
-This repository contains the analysis of SEQC2 WES data (SRR7890918 and SRR7890919) using the nf-core/sarek pipeline for tumor-normal somatic variant calling.
+This repository is a working draft of an attempt to perform HLA-I neoantigen prediction using a variety of pipelines and tools. 
 
-## Workflow
-1. Download FASTQ files using nf-core/fetchngs
-2. Run nf-core/sarek pipeline for variant calling
-3. Compare results with benchmarking data
+Briefly, HLA-I molecules present short fragments of proteins (peptides) synthesized inside of the cell. CD8+ T cells are then able to recognize and bind to these neoantigens and launch an immune response. Cells present self-antigens as a way allowing the immune system to distinguish self from non-self. In the case of cancer, mutations that lead to altered proteins can be presented as neoantigens on the HLA-I molecules of tumor cells that CD8+ T cells can recognize as non-self and respond to. By synthesizing candidate neoantigens and delivering them to the patient via a personalized cancer vaccine (PCV), we can stimulate, enhance, and diversify anti-tumor T cell responses.
+
+I am starting with a test dataset ([single patient](https://www.ncbi.nlm.nih.gov/biosample?Db=biosample&DbFrom=bioproject&Cmd=Link&LinkName=bioproject_biosample&LinkReadableName=BioSample&ordinalpos=1&IdsFromResult=924789)) with esophageal cancer to develop a workflow for identifying and prioritizing candidate neoantigens. The patient has tumor and normal (blood) WES and tumor RNA-seq data.
+
+To effectively identify and prioritize candidate neoantigens for personalized cancer vaccines (PCVs), there are some general attributes that one looks for:
+- The peptide must be unique to the tumor (not germline). This is because T cells undergo negative selection in the thymus during development if they recognize and bind too strongly to neoepitopes expressed on normal cells. To identify somatic mutations in the tumor, tumor and normal WES data were used as input in the nf-core/sarek pipeline, in order to generate a VEP-annotated VCF file. Specifically, the pipeline performed SNV/Indel calling with Mutect2 and Strelka and somatic copy number analysis (SCNA) with CNVkit. For now, only the annotated VCF file generated from Mutect2 is being considered for downstream analyses.
+- The variant must be expressed in the tumor, otherwise it has no chance of being presented on the HLA-I receptor of the tumor cell. To quantify expression, nf-core/rnaseq was performed, using the tumor RNA-seq data as input, where STAR-Salmon was used for transcript quantification. vcf-expression-annotator from vatools can then be used to annotate the vcf file with expression information. For now, I am considering variants and their expression at the transcript level. Previous studies on neoantigen prediction have defined expression thresholds used to filter candidate neoantigens.
+- The patient's HLA-I alleles must have adequate predicted binding affinity with the particular neopeptide. First, HLA-I typing was performed using nf-core/hlatyping, which leverages OptiType. From there, HLA-I-peptide binding affinity can be predicted using nf-core/epitopeprediction. For this test run, I only leveraged mhcflurry. The particular output of interest is the 'mhcflurry_affinity_percentile', where strong binders are defined as having a rank of < 0.5. For example, a peptide with a rank of 0.1 is among the top 0.1% of best binders.
 
