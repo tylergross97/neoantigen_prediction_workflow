@@ -1,28 +1,53 @@
 #!/bin/bash
-#SBATCH --job-name="fetchngs"
+#SBATCH --job-name="sarek"
 #SBATCH --cluster=ub-hpc
 #SBATCH --partition=general-compute
 #SBATCH --qos=general-compute
 #SBATCH --account=rpili
-#SBATCH --cpus-per-task=16           # Request 16 CPU cores per task based on nextflow.config
-#SBATCH --mem=126G                   # Request 512 GB of memory based on nextflow.config
-#SBATCH --time=6:00:00             
-#SBATCH --output=slurm-%j.out        # Standard output file (%j will be replaced by the job ID)
-#SBATCH --error=slurm-%j.err         # Standard error file
+#SBATCH --cpus-per-task=24
+#SBATCH --mem=258G
+#SBATCH --time=36:00:00
+#SBATCH --output=/projects/academic/rpili/Jonathan_Lovell_project/somatic_variant_calling_test/slurm-%j.out
+#SBATCH --error=/projects/academic/rpili/Jonathan_Lovell_project/somatic_variant_calling_test/slurm-%j.err
 #SBATCH --mail-user=tgross2@buffalo.edu
 #SBATCH --mail-type=ALL
 
+# Set up Java environment (locally installed)
+export JAVA_HOME="/projects/academic/rpili/tgross2/java/jdk-21.0.2"
+export PATH="$JAVA_HOME/bin:$PATH"
+# Set up Nextflow environment variables
+export TMPDIR=/projects/academic/rpili/tgross2/tmp
 export SINGULARITY_LOCALCACHEDIR=/projects/academic/rpili/tgross2/tmp
 export SINGULARITY_CACHEDIR=/projects/academic/rpili/tgross2/tmp
 export SINGULARITY_TMPDIR=/projects/academic/rpili/tgross2/tmp
 export NXF_SINGULARITY_CACHEDIR=/projects/academic/rpili/tgross2/singularity_cache
+export NXF_HOME=/projects/academic/rpili/tgross2/tmp/.nextflow
+export NXF_WORK=/vscratch/grp-rpili/neoantigen/rna
+# Set container environment variables
+export SINGULARITYENV_TMPDIR=/tmp
+export APPTAINERENV_TMPDIR=/tmp
+export SINGULARITYENV_HOME=/tmp
+export APPTAINERENV_HOME=/tmp
+# Create and set permissions for directories
+mkdir -p "$TMPDIR" "$NXF_SINGULARITY_CACHEDIR"
+chmod 755 "$TMPDIR" "$NXF_SINGULARITY_CACHEDIR"
+# Source your setup script
+source /projects/academic/rpili/tgross2/setup_nextflow_env.sh
+# Verify environment
+echo "=== Environment Check ==="
+echo "Java version: $(java -version 2>&1 | head -1)"
+echo "Nextflow version: $(nextflow -version 2>&1 | grep version)"
+echo "=========================="
 
-module load nextflow/23.10.0
-
-nextflow run nf-core/sarek -profile singularity \
-    --input samplesheet.csv \
-    --outdir results \
+# Run nf-core/sarek
+nextflow run nf-core/sarek -r 3.5.1 \
+    -profile singularity \
+    --input /projects/academic/rpili/Jonathan_Lovell_project/fastq/sample_sheet_dna.csv \
+    --outdir /projects/academic/rpili/Jonathan_Lovell_project/somatic_variant_calling_test/results \
+    --genome GATK.GRCh37 \
+    --tools strelka,mutect2,cnvkit,vep \
+    --max_memory '258.GB' \
+    --max_cpus 16 \
     --wes \
-    --genome GRCh38 \
-    --tools strelka,mutect2,manta,vep \
-    --igenomes_base s3://ngi-igenomes/igenomes/
+    --intervals /projects/academic/rpili/scripts/S33266436_Regions_without_chr_clean.bed \
+    -work-dir /vscratch/grp-rpili/neoantigen_prediction/sarek \

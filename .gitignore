@@ -1,12 +1,36 @@
-# Ignore output and intermediate files
-results/
-work/
+# Ignore all results and intermediate Nextflow output
+*results*/
+**/work/
 .nextflow*
 *.log
 slurm*
+
+# Ignore containers
 *.sif
 
-# Ignore fastq directory and all contents
+# Ignore fastq files
 fastq/
 *.fastq
 *.fastq.gz
+
+# Ignore any BAM, VCF, TSV, RDS, etc. outputs
+*.bam
+*.bai
+*.vcf
+*.tsv
+*.rds
+*.txt
+
+# Ignore any local config or cache files
+.cache/
+*.nf.cache
+
+# Ignore any MultiQC reports or figures
+*.html
+*.png
+*.pdf
+
+# Ignore any temporary files or editors' backups
+*~
+*.swp
+.DS_Store

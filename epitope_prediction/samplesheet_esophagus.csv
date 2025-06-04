@@ -1,0 +1,2 @@
+sample,alleles,mhc_class,filename
+PV1,A*02:01;A*24:02;B*44:02;B*51:01;C*01:02;C*07:04,I,/projects/academic/rpili/Jonathan_Lovell_project/somatic_variant_calling_test/results/annotation/mutect2/SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030/SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030.mutect2.filtered_VEP.ann.vcf.gz
