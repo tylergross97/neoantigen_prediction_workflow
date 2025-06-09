@@ -53,4 +53,4 @@ echo "Samtools version: $(samtools --version | head -1)"
 echo "Tabix version: $(tabix --version 2>&1 | head -1)"
 echo "=========================="
 
-nextflow run main.nf -resume
+nextflow run main_vcf.nf -resume
