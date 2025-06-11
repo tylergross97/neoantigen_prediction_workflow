@@ -51,6 +51,7 @@ echo "Nextflow version: $(nextflow -version 2>&1 | grep version)"
 echo "Python version: $(python --version)"
 echo "Samtools version: $(samtools --version | head -1)"
 echo "Tabix version: $(tabix --version 2>&1 | head -1)"
+echo "Sequenza utils version: $(sequenza-utils --version) | head -1)"
 echo "=========================="
 
-nextflow run main_vcf.nf -resume
+nextflow run main_debug.nf -resume
