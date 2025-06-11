@@ -4,6 +4,7 @@
 .nextflow*
 *.log
 slurm*
+*data/
 
 # Ignore containers
 *.sif
