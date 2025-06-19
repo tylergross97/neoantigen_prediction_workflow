@@ -1,0 +1,2 @@
+sample,alleles,mhc_class,filename
+SAMPLE_001,HLA-A*01:01;HLA-A*02:01;HLA-B*07:02;HLA-B*08:01;HLA-C*07:01;HLA-C*07:02,I,/path/to/results/annotation/mutect2/SAMPLE_B_vs_SAMPLE_A/SAMPLE_B_vs_SAMPLE_A.mutect2.filtered_VEP.ann.vcf.gz
