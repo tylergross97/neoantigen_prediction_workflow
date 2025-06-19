@@ -1,0 +1,57 @@
+# Ignore all directories ending in "results/"
+*results*/
+
+# BUT keep this specific one:
+!results/esophagus_test/
+!results/esophagus_test/**
+
+# (continue with your other ignores)
+**/work/
+.nextflow*
+*.log
+**slurm*
+**.out
+**.err
+*data/
+**sample*sheet**
+
+# Ignore slurm scripts
+**.sh
+
+# Ignore containers
+*.sif
+
+# Ignore fastq files
+fastq/
+*.fastq
+*.fastq.gz
+
+# Ignore any BAM, VCF, TSV, RDS, etc. outputs
+*.bam
+*.bai
+*.vcf
+*.tsv
+*.rds
+*.txt
+
+# Ignore local config/cache
+.cache/
+*.nf.cache
+
+# Ignore MultiQC reports/figures
+*.html
+*.png
+*.pdf
+
+# Temp/editor files
+*~
+*.swp
+.DS_Store
+
+# Ignore tool-specific dirs
+sequenza/
+sequenza/**
+vatools/
+vatools/**
+pvac/
+pvac/**
