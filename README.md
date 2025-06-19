@@ -2,6 +2,8 @@
 
 This repository is a working draft of an attempt to perform HLA-I neoantigen prediction using a variety of pipelines and tools. 
 
+![current_diagram](current_diagram.png)
+
 Briefly, HLA-I molecules present short fragments of proteins (peptides) synthesized inside of the cell. CD8+ T cells are then able to recognize and bind to these neoantigens and launch an immune response. Cells present self-antigens as a way allowing the immune system to distinguish self from non-self. In the case of cancer, mutations that lead to altered proteins can be presented as neoantigens on the HLA-I molecules of tumor cells that CD8+ T cells can recognize as non-self and respond to. By synthesizing candidate neoantigens and delivering them to the patient via a personalized cancer vaccine (PCV), we can stimulate, enhance, and diversify anti-tumor T cell responses.
 
 I am starting with a test dataset ([single patient](https://www.ncbi.nlm.nih.gov/biosample?Db=biosample&DbFrom=bioproject&Cmd=Link&LinkName=bioproject_biosample&LinkReadableName=BioSample&ordinalpos=1&IdsFromResult=924789)) with esophageal cancer to develop a workflow for identifying and prioritizing candidate neoantigens. The patient has tumor and normal (blood) WES and tumor RNA-seq data.
