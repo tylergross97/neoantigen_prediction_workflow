@@ -3,7 +3,9 @@
 **/work/
 .nextflow*
 *.log
-slurm*
+**slurm*
+**.out
+**.err
 *data/
 
 # Ignore slurm scripts
