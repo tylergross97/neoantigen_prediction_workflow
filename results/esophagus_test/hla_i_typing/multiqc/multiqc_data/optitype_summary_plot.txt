@@ -1,0 +1,7 @@
+Sample	A*02:01	A*24:02	B*44:02	B*51:01	C*01:02	C*07:04
+A1	1.0	nan	nan	nan	nan	nan
+A2	nan	1.0	nan	nan	nan	nan
+B1	nan	nan	1.0	nan	nan	nan
+B2	nan	nan	nan	1.0	nan	nan
+C1	nan	nan	nan	nan	1.0	nan
+C2	nan	nan	nan	nan	nan	1.0

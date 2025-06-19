@@ -1,0 +1,4 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	SRX19052221_SRR23100030_1	/vscratch/grp-rpili/hla_typing/be/8e1e4e544bf7a52a98221d43fef7ae/3/SRX19052221_SRR23100030_1_fastqc.zip
+FastQC	all_sections	SRX19052221_SRR23100030_2	/vscratch/grp-rpili/hla_typing/be/8e1e4e544bf7a52a98221d43fef7ae/4/SRX19052221_SRR23100030_2_fastqc.zip
+OptiType	all_sections	SRX19052221_SRR23100030_result	/vscratch/grp-rpili/hla_typing/be/8e1e4e544bf7a52a98221d43fef7ae/6/SRX19052221_SRR23100030_result.tsv
