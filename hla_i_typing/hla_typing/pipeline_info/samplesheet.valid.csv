@@ -1,2 +1,0 @@
-sample,single_end,fastq_1,fastq_2,seq_type
-SRR25627053_T1,False,/projects/academic/rpili/Jonathan_Lovell_project/somatic_variant_calling_test/fastq/SRR25627053_1.fastq.gz,/projects/academic/rpili/Jonathan_Lovell_project/somatic_variant_calling_test/fastq/SRR25627053_2.fastq.gz,dna

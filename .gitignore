@@ -1,5 +1,9 @@
 # Ignore all results and intermediate Nextflow output
 *results*/
+# But do not ignore test results
+!results/esophagus_test
+!results/esophagus_test/**
+
 **/work/
 .nextflow*
 *.log
