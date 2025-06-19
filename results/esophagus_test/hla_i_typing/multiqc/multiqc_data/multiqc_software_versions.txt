@@ -1,0 +1,6 @@
+Sample	fastqc	optitype	nf-core/hlatyping	Nextflow	yara	samtools
+FastQC	0.12.1					
+OptiType		1.3.1				
+Workflow			v2.1.0-g7d27f7e	25.04.2		
+YARA_INDEX					1.0.2	
+YARA_MAPPER					1.0.2	1.16.1

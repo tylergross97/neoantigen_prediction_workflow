@@ -11,6 +11,8 @@
 **.out
 **.err
 *data/
+hla_i_typing/esophagus_results/
+hla_i_typing/esophagus_results/**
 
 # Ignore slurm scripts
 **.sh

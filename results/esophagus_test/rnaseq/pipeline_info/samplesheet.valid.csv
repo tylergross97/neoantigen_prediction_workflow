@@ -1,0 +1,3 @@
+sample,single_end,fastq_1,fastq_2,strandedness
+PV1_T1,0,/projects/academic/rpili/raft/fastqs/SRX19052223_SRR23100028_1.fastq.gz,/projects/academic/rpili/raft/fastqs/SRX19052223_SRR23100028_2.fastq.gz,reverse
+esophagus_T1,0,/projects/academic/rpili/raft/fastqs/esophagus_1.fastq.gz,/projects/academic/rpili/raft/fastqs/esophagus_2.fastq.gz,reverse
