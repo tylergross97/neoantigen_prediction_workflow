@@ -6,6 +6,9 @@
 slurm*
 *data/
 
+# Ignore slurm scripts
+**.sh
+
 # Ignore containers
 *.sif
 
