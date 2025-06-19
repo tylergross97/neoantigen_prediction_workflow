@@ -1,0 +1,2 @@
+Sample	Binders	Non-binders	Unsupported	Binders (%)	Non-binders (%)
+PV1_mhcflurry	618	24156	0	2.49	97.51
