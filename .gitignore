@@ -46,3 +46,11 @@ fastq/
 *~
 *.swp
 .DS_Store
+
+# ignore directories for tools that are not part of the current working pipeline
+sequenza/
+sequenza/**
+vatools/
+vatools/**
+pvac/
+pvac/**
