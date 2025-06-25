@@ -38,6 +38,8 @@ fastq/
 # Ignore MultiQC reports/figures
 *.html
 *.png
+# Except workflow diagram
+!current_diagram.png
 *.pdf
 
 # Temp/editor files

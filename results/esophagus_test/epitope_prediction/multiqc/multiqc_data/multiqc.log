@@ -1,0 +1,12 @@
+[2025-06-04 11:01:35,074] multiqc.config                                     [INFO   ]  Loading config settings from: multiqc_config.yml
+[2025-06-04 11:01:36,253] multiqc.core.file_search                           [INFO   ]  Search path: /vscratch/grp-rpili/neoantigen_prediction/sarek/6b/0e09489c8ca4ab93e6d38454a72590
+[2025-06-04 11:01:36,792] multiqc.modules.bcftools.bcftools                  [INFO   ]  Found 1 stats reports
+[2025-06-04 11:01:36,821] multiqc.modules.custom_content.custom_content      [INFO   ]  nf-core-epitopeprediction-summary: Found 1 sample (html)
+[2025-06-04 11:01:36,821] multiqc.modules.custom_content.custom_content      [INFO   ]  nf-core-epitopeprediction-methods-description: Found 1 sample (html)
+[2025-06-04 11:01:36,844] multiqc.modules.custom_content.custom_content      [INFO   ]  binding_affinity_distribution: Found 1 samples (PlotType.LINE)
+[2025-06-04 11:01:36,921] multiqc.validation                                 [WARNING]  custom_content/custom_content.py: warnings while parsing lineplot.pconfig[id='binder_length_distribution'] {xlab: Peptide Length, xDecimals: False, categories: True, ylab: Relative Frequency, anchor: binder_length_distribution-section-plot, id: binder_length_distribution, title: Binder Length Distribution}:
+• 'xDecimals': deprecated field. Use 'x_decimals' instead
+[2025-06-04 11:01:36,943] multiqc.modules.custom_content.custom_content      [INFO   ]  binder_length_distribution: Found 1 samples (PlotType.LINE)
+[2025-06-04 11:01:36,966] multiqc.modules.custom_content.custom_content      [INFO   ]  binder_rank_distribution: Found 1 samples (PlotType.LINE)
+[2025-06-04 11:01:37,015] multiqc.modules.custom_content.custom_content      [INFO   ]  peptide_binding_prediction_stats: Found 1 samples (PlotType.TABLE)
+[2025-06-04 11:01:37,036] multiqc.core.write_results                         [INFO   ]  Rendering plots. Export plots to formats png, svg, pdf is requested, so it might take a while. To disable plot export, set `export_plots: false` in config, or remove the `--export-plots` command line flag

@@ -1,0 +1,11 @@
+Sample	bcftools	pigz	python	epytope	pandas	pyvcf	gunzip	argparse	mhcgnomes	MHCFLURRY	snpsift	nf-core/epitopeprediction	Nextflow
+BCFTOOLS_STATS	1.2												
+CAT_FASTA		2.3.4											
+EPYTOPE_VARIANT_PREDICTION			3.7.12	3.3.1	1.3.5	1.0.3							
+GUNZIP_VCF							1.13						
+MERGE_PREDICTIONS					2.1.0			1.1	1.8.6				
+MHCFLURRY										2.1.4			
+SNPSIFT_SPLIT											4.3		
+SPLIT_PEPTIDES			3.11.10										
+SUMMARIZE_RESULTS			3.11.5										
+Workflow												v3.0.0-g37c08f0	25.04.2
