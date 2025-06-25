@@ -15,9 +15,6 @@
 *data/
 **sample*sheet**
 
-# Ignore slurm scripts
-**.sh
-
 # Ignore containers
 *.sif
 
