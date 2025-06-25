@@ -52,3 +52,13 @@ vatools/
 vatools/**
 pvac/
 pvac/**
+epitope_prediction/
+epitope_prediction/**
+purecn/
+purecn/**
+hla_i_typing/
+hla_i_typing/**
+somatic_variant_calling_test/
+somatic_variant_calling_test/**
+transcript_quant_test/
+transcript_quant_test/**

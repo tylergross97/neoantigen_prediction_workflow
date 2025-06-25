@@ -1,2 +1,0 @@
-Module	Section	Sample Name	Source
-Bcftools	stats	SRX19052222_SRR23100029_vs_SRX19052221_SRR23100030.mutect2.filtered_VEP.ann	/vscratch/grp-rpili/neoantigen_prediction/sarek/6b/0e09489c8ca4ab93e6d38454a72590/3/PV1.bcftools_stats.txt

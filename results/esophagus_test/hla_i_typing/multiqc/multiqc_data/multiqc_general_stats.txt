@@ -1,4 +1,0 @@
-Sample	fastqc-percent_duplicates	fastqc-percent_gc	fastqc-avg_sequence_length	fastqc-median_sequence_length	fastqc-percent_fails	fastqc-total_sequences	optitype-A1	optitype-A2	optitype-B1	optitype-B2	optitype-C1	optitype-C2	optitype-Reads	optitype-Objective
-SRX19052221_SRR23100030_1	12.291336739748743	48.0	100.0	100	10.0	18.125571								
-SRX19052221_SRR23100030_2	11.144054649742799	48.0	100.0	100	10.0	18.125571								
-SRX19052221_SRR23100030_result							A*02:01	A*24:02	B*44:02	B*51:01	C*01:02	C*07:04	709.0	683.4760000000007
