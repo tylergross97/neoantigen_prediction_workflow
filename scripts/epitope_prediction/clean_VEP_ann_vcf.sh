@@ -1,4 +1,4 @@
-source /projects/academic/rpili/tyler_venv/bin/activate
+source /path/to/your/virtualenv/bin/activate
 
 # Create an improved comprehensive VCF cleaning script
 cat > clean_epitope_vcf_v2.py << 'EOF'
@@ -155,8 +155,8 @@ EOF
 chmod +x clean_epitope_vcf_v2.py
 
 # Clean your VCF file with the improved script
-python3 clean_epitope_vcf_v2.py RCC_vs_DNA1.mutect2.filtered_VEP.ann.vcf.gz RCC_vs_DNA1.mutect2.filtered_VEP.ann.cleaned_v2.vcf
+python3 clean_epitope_vcf_v2.py input_file.vcf.gz output_file.cleaned_v2.vcf
 
 # Compress and index the cleaned VCF
-bgzip RCC_vs_DNA1.mutect2.filtered_VEP.ann.cleaned_v2.vcf
-tabix -p vcf RCC_vs_DNA1.mutect2.filtered_VEP.ann.cleaned_v2.vcf.gz
+bgzip output_file.cleaned_v2.vcf
+tabix -p vcf output_file.cleaned_v2.vcf.gz
