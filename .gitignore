@@ -64,3 +64,7 @@ somatic_variant_calling_test/
 somatic_variant_calling_test/**
 transcript_quant_test/
 transcript_quant_test/**
+
+# Ensure scripts folder and contents are tracked
+!scripts/
+!scripts/**
