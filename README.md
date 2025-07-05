@@ -30,13 +30,13 @@ flowchart TD
     sarek --> vep_vcf([VEP-annotated VCF])
     rnaseq_fastq([Tumor RNA-seq FASTQ]) --> rnaseq[nf-core/rnaseq]
     vep_vcf --> expr_annotator[vcf-expression-annotator]
-    rnaseq --> gtx([gene-/transcript-level expression])
+    rnaseq --> gtx([Gene- and Transcript-level Expression])
     gtx --> expr_annotator
-    expr_annotator --> expr_vcf([VCF with Expression])
+    expr_annotator --> expr_vcf([VEP-annotated VCF with Expression])
     wes_fastq --> hlatyping[nf-core/hlatyping]
     hlatyping --> hla_alleles([HLA-I Alleles])
     expr_vcf --> epipred[epitope_prediction]
-    expr_vcf --> expr_vcf_csv([VCF with Expression: CSV format])
+    expr_vcf --> expr_vcf_csv([VEP-annotated VCF with Expression: CSV format])
     hla_alleles --> epipred
     epipred --> hla_pep([HLA-I:Peptide Binding Predictions])
     hla_pep --> downstream[neoantigen_downstream]
