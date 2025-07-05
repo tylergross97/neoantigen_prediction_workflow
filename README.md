@@ -36,7 +36,8 @@ flowchart TD
     wes_fastq --> hlatyping[nf-core/hlatyping]
     hlatyping --> hla_alleles([HLA-I Alleles])
     expr_vcf --> expr_vcf_cleaner[clean_vep_ann_vcf.py]
-    expr_vcf_cleaner --> epipred[epitope_prediction]
+    expr_vcf_cleaner --> clean_expr_vcf([VEP-annotated VCF w/ Expression (Cleaned)])
+    clean_expr_vcf --> epipred[epitope_prediction]
     expr_vcf --> vcf_2_csv[vcf2csv.py]
     vcf_2_csv --> expr_vcf_csv([VEP-annotated VCF with Expression: CSV format])
     hla_alleles --> epipred
