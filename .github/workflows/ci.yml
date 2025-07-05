@@ -23,9 +23,9 @@ jobs:
       - name: Run Black
         run: |
           docker run --rm -v ${{ github.workspace }}:/app neo \
-            sh -c "black --check /app"
+            sh -c "PYTHONPATH=/app black --check /app"
 
       - name: Run pytest
         run: |
           docker run --rm -v ${{ github.workspace }}:/app neo \
-            sh -c "pytest /app"
+            sh -c "PYTHONPATH=/app pytest /app"
