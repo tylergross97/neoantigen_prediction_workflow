@@ -30,7 +30,7 @@ flowchart TD
     sarek --> vep_vcf([VEP-annotated VCF])
     rnaseq_fastq([Tumor RNA-seq FASTQ]) --> rnaseq[nf-core/rnaseq]
     vep_vcf --> expr_annotator[vcf-expression-annotator]
-    rnaseq --> g_t_x([gene-/transcript-level expression])
+    rnaseq --> gtx([gene-/transcript-level expression])
     gtx --> expr_annotator
     expr_annotator --> expr_vcf([VCF with Expression])
     wes_fastq --> hlatyping[nf-core/hlatyping]
