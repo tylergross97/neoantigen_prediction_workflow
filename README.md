@@ -22,6 +22,8 @@ To effectively identify and prioritize candidate neoantigens for personalized ca
 
 ## Workflow Overview
 
+**Spherical nodes indicate data and squared nodes indicate processes**
+
 ```mermaid
 flowchart TD
     wes_fastq([WES Tumor/Normal FASTQ]) --> sarek[nf-core/sarek]
@@ -33,7 +35,7 @@ flowchart TD
     wes_fastq --> hlatyping[nf-core/hlatyping]
     hlatyping --> hla_alleles([HLA-I Alleles])
     expr_vcf --> epipred[epitope_prediction]
-    expr_vcf --> expr_vcf_csv[VCF with Expression: CSV format]
+    expr_vcf --> expr_vcf_csv([VCF with Expression: CSV format])
     hla_alleles --> epipred
     epipred --> downstream[neoantigen_downstream]
     expr_vcf_csv --> downstream
