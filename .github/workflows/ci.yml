@@ -40,6 +40,5 @@ jobs:
       - name: Check Mermaid diagram in README
         run: |
           npm install -g @mermaid-js/mermaid-cli
-          # Extract the first mermaid code block from README.md and render to PNG (will fail if invalid)
           awk '/```mermaid/{flag=1;next}/```/{flag=0}flag' README.md > workflow.mmd
-          mmdc -i workflow.mmd -o workflow.png
+          mmdc --no-sandbox -i workflow.mmd -o workflow.png

@@ -22,6 +22,9 @@
 # Ignore slurm scripts
 **.sh
 
+!scripts/
+!scripts/**
+
 # Ignore containers
 *.sif
 

@@ -24,17 +24,40 @@ To effectively identify and prioritize candidate neoantigens for personalized ca
 
 ```mermaid
 flowchart TD
-    wes_fastq["WES Tumor/Normal FASTQ"] --> sarek["nf-core/sarek (Mutect2/Strelka)"]
-    sarek --> vep_vcf["VEP-annotated VCF"]
-    vep_vcf --> expr_annotator["vcf-expression-annotator (vatools)"]
-    expr_annotator --> expr_vcf["Expression-annotated VCF"]
-    expr_vcf --> vcf2csv["vcf_to_csv.py"]
-    vcf2csv --> expr_csv["Expression CSV"]
-    rnaseq_fastq["Tumor RNA-seq FASTQ"] --> rnaseq["nf-core/rnaseq (STAR-Salmon)"]
-    expr_csv --> downstream["neoantigen_downstream.py"]
-    epipred["epitope_prediction (mhcflurry)"] --> epi_tsv["Epitope Prediction TSV"]
+    %% Inputs
+    wes_fastq([WES Tumor/Normal FASTQ])
+    rnaseq_fastq([Tumor/Normal RNA-seq FASTQ])
+
+    %% Processes/Tools
+    sarek{{nf-core/sarek (Mutect2/VEP)}}
+    rnaseq{{nf-core/rnaseq (STAR-Salmon)}}
+    expr_annotator{{vcf-expression-annotator (vatools)}}
+    vcf2csv{{vcf_to_csv.py}}
+    epipred{{epitope_prediction (mhcflurry)}}
+    downstream{{neoantigen_downstream.py}}
+
+    %% Files/Artifacts
+    vep_vcf([VEP-annotated VCF])
+    expr_vcf([VEP-annotated VCF with Variant Expression])
+    expr_csv([Variant Expression CSV])
+    epi_tsv([Epitope Prediction TSV])
+    final([Final CSVs & Plots])
+
+    %% Workflow
+    wes_fastq --> sarek
+    sarek --> vep_vcf
+    vep_vcf --> expr_annotator
+    rnaseq_fastq --> rnaseq
+    rnaseq --> expr_annotator
+    expr_annotator --> expr_vcf
+    expr_vcf --> vcf2csv
+    vcf2csv --> expr_csv
+    expr_csv --> downstream
+    vep_vcf --> epipred
+    expr_vcf --> epipred
+    epipred --> epi_tsv
     epi_tsv --> downstream
-    downstream --> final["Final CSVs & Plots"]
+    downstream --> final
 ```
 
 ### Step-by-step Explanation
