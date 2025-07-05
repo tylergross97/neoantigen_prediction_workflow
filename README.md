@@ -38,8 +38,8 @@ flowchart TD
     expr_vcf --> expr_vcf_cleaner[clean_vep_ann_vcf.py]
     expr_vcf_cleaner --> clean_expr_vcf([VEP-annotated VCF w/ Expression Cleaned])
     clean_expr_vcf --> epipred[epitope_prediction]
-    expr_vcf --> vcf_2_csv[vcf2csv.py]
-    vcf_2_csv --> expr_vcf_csv([VEP-annotated VCF with Expression: CSV format])
+    clean_expr_vcf --> vcf_2_csv[vcf2csv.py]
+    vcf_2_csv --> expr_vcf_csv([VEP-annotated VCF with Expression Clean: CSV format])
     hla_alleles --> epipred
     epipred --> hla_pep([HLA-I:Peptide Binding Predictions])
     hla_pep --> downstream[neoantigen_downstream]
