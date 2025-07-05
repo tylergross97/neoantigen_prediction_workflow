@@ -4,39 +4,40 @@ import csv
 from cyvcf2 import VCF
 import argparse
 
-def main():
-    parser = argparse.ArgumentParser(description="Parse VCF annotated with VEP and TX expression to CSV")
-    parser.add_argument("-i", "--input", required=True, help="Input VCF.gz file")
-    parser.add_argument("-o", "--output", help="Output CSV file (optional)")
-    parser.add_argument("-t", "--tumor", required=True, help="Tumor sample name in VCF FORMAT")
-    args = parser.parse_args()
 
-    vcf_file = args.input
-    output_csv = args.output if args.output else os.path.splitext(os.path.basename(vcf_file))[0] + "_neoantigen.csv"
-    tumor_sample = args.tumor
-
+def vcf_to_csv(vcf_file, output_csv, tumor_sample):
     # Extract VEP CSQ fields from VCF header
     vep_fields = []
     vcf_reader = VCF(vcf_file)
     for line in vcf_reader.raw_header.splitlines():
         if line.startswith("##INFO=<ID=CSQ"):
             desc = line.split("Format: ")[-1].rstrip('">')
-            vep_fields = desc.split('|')
+            vep_fields = desc.split("|")
             break
 
     # Check tumor sample index
     if tumor_sample not in vcf_reader.samples:
-        print(f"Error: tumor sample '{tumor_sample}' not found in VCF samples: {vcf_reader.samples}")
-        sys.exit(1)
+        raise ValueError(
+            f"Error: tumor sample '{tumor_sample}' not found in VCF samples: {vcf_reader.samples}"
+        )
     sample_idx = vcf_reader.samples.index(tumor_sample)
 
     columns = [
-        "CHROM", "POS", "REF", "ALT", "Filter",
-        "Gene", "Transcript_ID", "HGVSp", "Consequence",
-        "AF", "Expression", "gnomAD_AF"
+        "CHROM",
+        "POS",
+        "REF",
+        "ALT",
+        "Filter",
+        "Gene",
+        "Transcript_ID",
+        "HGVSp",
+        "Consequence",
+        "AF",
+        "Expression",
+        "gnomAD_AF",
     ]
 
-    with open(output_csv, "w", newline='') as csvfile:
+    with open(output_csv, "w", newline="") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=columns)
         writer.writeheader()
 
@@ -56,7 +57,7 @@ def main():
                 "Transcript_ID": None,
                 "HGVSp": None,
                 "Consequence": None,
-                "gnomAD_AF": None
+                "gnomAD_AF": None,
             }
 
             # Allele Frequency from FORMAT if present
@@ -65,7 +66,9 @@ def main():
                 if af_data is not None and len(af_data) > sample_idx:
                     af_value = af_data[sample_idx]
                     # af_value can be a float or an array with one element
-                    if hasattr(af_value, '__iter__') and not isinstance(af_value, (str, bytes)):
+                    if hasattr(af_value, "__iter__") and not isinstance(
+                        af_value, (str, bytes)
+                    ):
                         af_value = af_value[0]
                     record["AF"] = af_value
 
@@ -94,12 +97,37 @@ def main():
                         record["Gene"] = csq_dict.get("SYMBOL")
                         record["HGVSp"] = csq_dict.get("HGVSp")
                         record["Consequence"] = csq_dict.get("Consequence")
-                        record["gnomAD_AF"] = csq_dict.get("gnomADe_AF") or csq_dict.get("gnomADg_AF")
+                        record["gnomAD_AF"] = csq_dict.get(
+                            "gnomADe_AF"
+                        ) or csq_dict.get("gnomADg_AF")
                         break
 
             writer.writerow(record)
 
     print(f"✅ Saved: {output_csv}")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Parse VCF annotated with VEP and TX expression to CSV"
+    )
+    parser.add_argument("-i", "--input", required=True, help="Input VCF.gz file")
+    parser.add_argument("-o", "--output", help="Output CSV file (optional)")
+    parser.add_argument(
+        "-t", "--tumor", required=True, help="Tumor sample name in VCF FORMAT"
+    )
+    args = parser.parse_args()
+
+    vcf_file = args.input
+    output_csv = (
+        args.output
+        if args.output
+        else os.path.splitext(os.path.basename(vcf_file))[0] + "_neoantigen.csv"
+    )
+    tumor_sample = args.tumor
+
+    vcf_to_csv(vcf_file, output_csv, tumor_sample)
+
 
 if __name__ == "__main__":
     main()

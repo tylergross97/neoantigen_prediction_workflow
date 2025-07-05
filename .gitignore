@@ -1,3 +1,7 @@
+# Ignore all .vcf.gz and .cnn files everywhere
+*.vcf.gz
+*.cnn
+
 # Ignore all directories ending in "results/"
 *results*/
 
@@ -14,6 +18,9 @@
 **.err
 *data/
 **sample*sheet**
+
+# Ignore slurm scripts
+**.sh
 
 # Ignore containers
 *.sif
@@ -38,8 +45,6 @@ fastq/
 # Ignore MultiQC reports/figures
 *.html
 *.png
-# Except workflow diagram
-!current_diagram.png
 *.pdf
 
 # Temp/editor files
@@ -54,17 +59,4 @@ vatools/
 vatools/**
 pvac/
 pvac/**
-epitope_prediction/
-epitope_prediction/**
-purecn/
-purecn/**
-hla_i_typing/
-hla_i_typing/**
-somatic_variant_calling_test/
-somatic_variant_calling_test/**
-transcript_quant_test/
-transcript_quant_test/**
-
-# Ensure scripts folder and contents are tracked
-!scripts/
-!scripts/**
+.Rproj.user
