@@ -23,7 +23,9 @@ def clean_annotation_field(field_value):
                 # If numerator is like "3107-?" or "?-1"
                 if "-" in numerator:
                     nums = re.findall(r"\d+", numerator)
-                    numerator = nums[0] if nums else "1"  # Take the first number for "3107-?"
+                    numerator = (
+                        nums[0] if nums else "1"
+                    )  # Take the first number for "3107-?"
                 else:
                     numerator = "1"
             if "?" in denominator:
@@ -39,7 +41,9 @@ def clean_annotation_field(field_value):
             if "?" in numerator:
                 if "-" in numerator:
                     nums = re.findall(r"\d+", numerator)
-                    numerator = nums[0] if nums else "1"  # Take the first number for "1036-?"
+                    numerator = (
+                        nums[0] if nums else "1"
+                    )  # Take the first number for "1036-?"
                 else:
                     numerator = "1"
             if "?" in denominator:

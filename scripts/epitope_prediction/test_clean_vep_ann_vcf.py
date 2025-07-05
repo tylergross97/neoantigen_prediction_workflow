@@ -1,7 +1,9 @@
 import pytest
+
 # Import the functions to be tested from the main script
 # Assuming the functions are defined in a file named clean_vep_ann_vcf.py in the same directory
 from clean_vep_ann_vcf import clean_annotation_field, clean_vcf_line
+
 
 def test_clean_annotation_field():
     assert clean_annotation_field("?") == "1"
@@ -13,11 +15,10 @@ def test_clean_annotation_field():
     assert clean_annotation_field("") == ""
     assert clean_annotation_field(None) == ""
 
+
 def test_clean_vcf_line():
     # Example VCF line with problematic CSQ fields
-    line = (
-        "chr1\t123456\t.\tA\tT\t.\t.\tCSQ=ENST00000367770|?|?|?|?|?|?|?|?|?|?|?|?-1/8553|3107-?/3108|1036-?/1035|?|?;ANOTHER=VALUE\n"
-    )
+    line = "chr1\t123456\t.\tA\tT\t.\t.\tCSQ=ENST00000367770|?|?|?|?|?|?|?|?|?|?|?|?-1/8553|3107-?/3108|1036-?/1035|?|?;ANOTHER=VALUE\n"
     cleaned = clean_vcf_line(line)
     assert "1/8553" in cleaned
     assert "3107/3108" in cleaned

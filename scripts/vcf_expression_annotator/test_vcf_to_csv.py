@@ -4,6 +4,7 @@ import shutil
 import csv
 from vcf_to_csv import vcf_to_csv
 
+
 def test_vcf_to_csv(tmp_path):
     # Prepare a minimal VCF file
     vcf_content = """##fileformat=VCFv4.2
