@@ -24,49 +24,49 @@ To effectively identify and prioritize candidate neoantigens for personalized ca
 
 ```mermaid
 flowchart TD
-    A[WES Tumor/Normal FASTQ] --> B[nf-core/sarek (Mutect2/Strelka)]
-    B --> C[VEP-annotated VCF]
-    C --> D[vcf-expression-annotator (vatools)]
-    D --> E[Expression-annotated VCF]
-    E --> F[vcf_to_csv.py]
-    F --> G[Expression CSV]
-    H[Tumor RNA-seq FASTQ] --> I[nf-core/rnaseq (STAR-Salmon)]
-    G --> J[neoantigen_downstream.py]
-    K[epitope_prediction (mhcflurry)] --> L[Epitope Prediction TSV]
-    L --> J
-    J --> M[Final CSVs & Plots]
+    wes_fastq["WES Tumor/Normal FASTQ"] --> sarek["nf-core/sarek (Mutect2/Strelka)"]
+    sarek --> vep_vcf["VEP-annotated VCF"]
+    vep_vcf --> expr_annotator["vcf-expression-annotator (vatools)"]
+    expr_annotator --> expr_vcf["Expression-annotated VCF"]
+    expr_vcf --> vcf2csv["vcf_to_csv.py"]
+    vcf2csv --> expr_csv["Expression CSV"]
+    rnaseq_fastq["Tumor RNA-seq FASTQ"] --> rnaseq["nf-core/rnaseq (STAR-Salmon)"]
+    expr_csv --> downstream["neoantigen_downstream.py"]
+    epipred["epitope_prediction (mhcflurry)"] --> epi_tsv["Epitope Prediction TSV"]
+    epi_tsv --> downstream
+    downstream --> final["Final CSVs & Plots"]
 ```
 
 ### Step-by-step Explanation
 
-1. **Somatic Variant Calling:**  
-   - **Input:** Tumor and normal WES FASTQ files  
-   - **Tool:** `nf-core/sarek` pipeline (Mutect2/Strelka)  
+1. **Somatic Variant Calling:**
+   - **Input:** Tumor and normal WES FASTQ files
+   - **Tool:** `nf-core/sarek` pipeline (Mutect2/Strelka)
    - **Output:** VEP-annotated VCF file containing somatic variants
 
-2. **Expression Annotation:**  
-   - **Input:** VEP-annotated VCF  
-   - **Tool:** `vcf-expression-annotator` from vatools  
+2. **Expression Annotation:**
+   - **Input:** VEP-annotated VCF
+   - **Tool:** `vcf-expression-annotator` from vatools
    - **Output:** VCF annotated with transcript expression (from RNA-seq)
 
-3. **VCF to CSV Conversion:**  
-   - **Input:** Expression-annotated VCF  
-   - **Tool:** `scripts/vcf_expression_annotator/vcf_to_csv.py`  
+3. **VCF to CSV Conversion:**
+   - **Input:** Expression-annotated VCF
+   - **Tool:** `scripts/vcf_expression_annotator/vcf_to_csv.py`
    - **Output:** CSV summarizing variants and their expression
 
-4. **RNA-seq Quantification:**  
-   - **Input:** Tumor RNA-seq FASTQ  
-   - **Tool:** `nf-core/rnaseq` (STAR-Salmon)  
+4. **RNA-seq Quantification:**
+   - **Input:** Tumor RNA-seq FASTQ
+   - **Tool:** `nf-core/rnaseq` (STAR-Salmon)
    - **Output:** Transcript-level expression quantification (used in annotation)
 
-5. **Epitope Prediction:**  
-   - **Input:** Cleaned VCF and HLA typing results  
-   - **Tool:** `epitope_prediction` (mhcflurry)  
+5. **Epitope Prediction:**
+   - **Input:** Cleaned VCF and HLA typing results
+   - **Tool:** `epitope_prediction` (mhcflurry)
    - **Output:** TSV with predicted HLA-I/peptide binding affinities
 
-6. **Downstream Analysis:**  
-   - **Input:** Expression CSV and epitope prediction TSV  
-   - **Tool:** `scripts/downstream/neoantigen_downstream.py`  
+6. **Downstream Analysis:**
+   - **Input:** Expression CSV and epitope prediction TSV
+   - **Tool:** `scripts/downstream/neoantigen_downstream.py`
    - **Output:** Final merged CSVs and plots for candidate neoantigen prioritization
 
 ---
