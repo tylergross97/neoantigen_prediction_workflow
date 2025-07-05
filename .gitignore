@@ -1,7 +1,7 @@
 # Ignore all .vcf.gz and .cnn files everywhere
 *.vcf.gz
+*.vcf.gz.tbi
 *.cnn
-
 # Ignore all directories ending in "results/"
 *results*/
 
