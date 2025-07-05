@@ -20,15 +20,15 @@ jobs:
       - name: Build Docker image
         run: docker build -t neo .
 
-      - name: Run Black (epitope_prediction)
+      - name: Run Black (clean_vep_ann_vcf.py)
         run: |
           docker run --rm -v ${{ github.workspace }}:/app neo \
-            black --check /app/scripts/epitope_prediction/*.py
+            sh -c "black --check /app/scripts/epitope_prediction/*.py"
 
-      - name: Run Black (vcf_expression_annotator)
+      - name: Run Black (vcf_to_csv.py)
         run: |
           docker run --rm -v ${{ github.workspace }}:/app neo \
-            black --check /app/scripts/vcf_expression_annotator/*.py
+            sh -c "black --check /app/scripts/vcf_expression_annotator/*.py"
 
       - name: Run pytest
         run: |
