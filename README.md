@@ -1,19 +1,72 @@
 # Neoantigen Prediction
 
-This repository is a working draft of an attempt to perform HLA-I neoantigen prediction using a variety of pipelines and tools.
+This repository is a working draft of a set of analyses to identify candidate neoantigens for personalized cancer vaccines from tumor-normal WES + RNA-seq data.
 
-![current_diagram](current_diagram.png)
+## Key Attributes for Neoantigen Prioritization
 
-Briefly, HLA-I molecules present short fragments of proteins (peptides) synthesized inside of the cell. CD8+ T cells are then able to recognize and bind to these neoantigens and launch an immune response. Cells present self-antigens as a way allowing the immune system to distinguish self from non-self. In the case of cancer, mutations that lead to altered proteins can be presented as neoantigens on the HLA-I molecules of tumor cells that CD8+ T cells can recognize as non-self and respond to. By synthesizing candidate neoantigens and delivering them to the patient via a personalized cancer vaccine (PCV), we can stimulate, enhance, and diversify anti-tumor T cell responses.
+To effectively identify and prioritize candidate neoantigens for personalized cancer vaccines (PCVs), several biological and computational criteria are considered:
 
-I am starting with a test dataset ([single patient](https://www.ncbi.nlm.nih.gov/biosample?Db=biosample&DbFrom=bioproject&Cmd=Link&LinkName=bioproject_biosample&LinkReadableName=BioSample&ordinalpos=1&IdsFromResult=924789)) with esophageal cancer to develop a workflow for identifying and prioritizing candidate neoantigens. The patient has tumor and normal (blood) WES and tumor RNA-seq data.
+- **Somatic variants:**  
+  The peptide must be unique to the tumor (not germline). T cells undergo negative selection in the thymus if they recognize and bind too strongly to neoepitopes expressed on normal cells. To identify somatic mutations, tumor and normal WES data are processed with the `nf-core/sarek` pipeline, generating a VEP-annotated VCF file. This involves SNV/Indel calling (Mutect2, Strelka) and somatic copy number analysis (CNVkit). For now, only the Mutect2-annotated VCF is used for downstream analysis.
 
-To effectively identify and prioritize candidate neoantigens for personalized cancer vaccines (PCVs), there are some general attributes that one looks for:
+- **Variant expression:**  
+  The variant must be expressed in the tumor to be presented on the HLA-I receptor. Tumor RNA-seq data is quantified using `nf-core/rnaseq` (STAR-Salmon). The `vcf-expression-annotator` from vatools annotates the VCF with transcript-level expression. Previous studies have used TPM cutoffs (e.g., 0.01) to filter candidates. The annotated VCF is converted to CSV using `/scripts/vcf_expression_annotator/vcf_to_csv.py`.
 
-- Somatic variants: The peptide must be unique to the tumor (not germline). This is because T cells undergo negative selection in the thymus during development if they recognize and bind too strongly to neoepitopes expressed on normal cells. To identify somatic mutations in the tumor, tumor and normal WES data were used as input in the nf-core/sarek pipeline, in order to generate a VEP-annotated VCF file. Specifically, the pipeline performed SNV/Indel calling with Mutect2 and Strelka and somatic copy number analysis (SCNA) with CNVkit. For now, only the annotated VCF file generated from Mutect2 is being considered for downstream analyses.
-- Variant expression: The variant must be expressed in the tumor, otherwise it has no chance of being presented on the HLA-I receptor of the tumor cell. To quantify expression, nf-core/rnaseq was performed, using the tumor RNA-seq data as input, where STAR-Salmon was used for transcript quantification. vcf-expression-annotator from vatools can then be used to annotate the vcf file with expression information. For now, I am considering variants and their expression at the transcript level. Previous studies on neoantigen prediction have defined expression thresholds used to filter candidate neoantigens. The vcf file annotated with expression information is present in the vatools/ directory. Previous research has used a TPM cutoff of 0.01. The expression annotated vcf file can be converted into a csv using the /scripts/vcf_expression_annotator/vcf_to_csv.py custom script.
-- Binding affinity: The patient's HLA-I alleles must have adequate predicted binding affinity with the particular neopeptide. First, HLA-I typing was performed using nf-core/hlatyping, which leverages OptiType. The HLA-I typing results and the annotated VCF file (after cleaning with scripts/epitope_prediction/clean_vep_ann_vcf.py custom script) are used as input into nf-core/epitopeprediction, which predicts HLA-I/peptide binding affinity using mhcflurry. The particular output of interest is the 'mhcflurry_affinity_percentile', where strong binders are defined as having a rank of < 0.5. For example, a peptide with a rank of 0.1 is among the top 0.1% of best binders.
-- Clonality: **Under development** Here, we are interesting in estimating the fraction of cancer cells that are exhibiting our variants, and in turn, our peptides, of interest. This is of interest to us because in reality, tumors are usually heterogenous. If a mutation is clonal driver (from the original clone), then it should have a cancer cell fraction of 100%, as all subclones that originate from it should have that mutation present. PureCN can be used to esimate cancer cell fraction of each variant by estimating the clonality of the tumor.
+- **Binding affinity:**  
+  The patient's HLA-I alleles must have adequate predicted binding affinity with the neopeptide. HLA-I typing is performed with `nf-core/hlatyping` (OptiType). The HLA-I results and the annotated VCF (optionally cleaned with `/scripts/epitope_prediction/clean_vep_ann_vcf.py`) are input to `nf-core/epitopeprediction`, which predicts HLA-I/peptide binding affinity using mhcflurry. The key output is `mhcflurry_affinity_percentile`, with strong binders defined as rank < 0.5.
 
-The two main outputs of the above steps are csv file generated from scripts/vcf_expression_annotator/vcf_to_csv.py and the epitope_prediction/results/predictions/{sample}.tsv
-- These two files can be 
+- **Clonality:**  
+  **Under development.** We aim to estimate the fraction of cancer cells exhibiting each variant and peptide, as tumors are often heterogeneous. Clonal driver mutations should have a cancer cell fraction of 100%. PureCN can estimate the clonality of each variant.
+
+---
+
+## Workflow Overview
+
+```mermaid
+flowchart TD
+    A[WES Tumor/Normal FASTQ] --> B[nf-core/sarek (Mutect2/Strelka)]
+    B --> C[VEP-annotated VCF]
+    C --> D[vcf-expression-annotator (vatools)]
+    D --> E[Expression-annotated VCF]
+    E --> F[vcf_to_csv.py]
+    F --> G[Expression CSV]
+    H[Tumor RNA-seq FASTQ] --> I[nf-core/rnaseq (STAR-Salmon)]
+    G --> J[neoantigen_downstream.py]
+    K[epitope_prediction (mhcflurry)] --> L[Epitope Prediction TSV]
+    L --> J
+    J --> M[Final CSVs & Plots]
+```
+
+### Step-by-step Explanation
+
+1. **Somatic Variant Calling:**  
+   - **Input:** Tumor and normal WES FASTQ files  
+   - **Tool:** `nf-core/sarek` pipeline (Mutect2/Strelka)  
+   - **Output:** VEP-annotated VCF file containing somatic variants
+
+2. **Expression Annotation:**  
+   - **Input:** VEP-annotated VCF  
+   - **Tool:** `vcf-expression-annotator` from vatools  
+   - **Output:** VCF annotated with transcript expression (from RNA-seq)
+
+3. **VCF to CSV Conversion:**  
+   - **Input:** Expression-annotated VCF  
+   - **Tool:** `scripts/vcf_expression_annotator/vcf_to_csv.py`  
+   - **Output:** CSV summarizing variants and their expression
+
+4. **RNA-seq Quantification:**  
+   - **Input:** Tumor RNA-seq FASTQ  
+   - **Tool:** `nf-core/rnaseq` (STAR-Salmon)  
+   - **Output:** Transcript-level expression quantification (used in annotation)
+
+5. **Epitope Prediction:**  
+   - **Input:** Cleaned VCF and HLA typing results  
+   - **Tool:** `epitope_prediction` (mhcflurry)  
+   - **Output:** TSV with predicted HLA-I/peptide binding affinities
+
+6. **Downstream Analysis:**  
+   - **Input:** Expression CSV and epitope prediction TSV  
+   - **Tool:** `scripts/downstream/neoantigen_downstream.py`  
+   - **Output:** Final merged CSVs and plots for candidate neoantigen prioritization
+
+---
