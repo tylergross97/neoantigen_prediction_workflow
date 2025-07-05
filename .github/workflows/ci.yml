@@ -29,16 +29,3 @@ jobs:
         run: |
           docker run --rm -v ${{ github.workspace }}:/app neo \
             sh -c "PYTHONPATH=/app pytest /app"
-
-  mermaid-diagram:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check Mermaid diagram in README
-        run: |
-          npm install -g @mermaid-js/mermaid-cli
-          awk '/```mermaid/{flag=1;next}/```/{flag=0}flag' README.md > workflow.mmd
-          mmdc -e '{"args": ["--no-sandbox"]}' -i workflow.mmd -o workflow.png

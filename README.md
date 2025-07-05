@@ -33,8 +33,10 @@ flowchart TD
     wes_fastq --> hlatyping[nf-core/hlatyping]
     hlatyping --> hla_alleles([HLA-I Alleles])
     expr_vcf --> epipred[epitope_prediction]
+    expr_vcf --> expr_vcf_csv[VCF with Expression: CSV format]
     hla_alleles --> epipred
     epipred --> downstream[neoantigen_downstream]
+    expr_vcf_csv --> downstream
     downstream --> final([Final Results])
 ```
 
