@@ -1,5 +1,8 @@
 black
 pytest
 cyvcf2
-nextflow
-nf-core
+mygene
+pandas
+numpy
+matplotlib
+seaborn

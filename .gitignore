@@ -40,6 +40,7 @@ fastq/
 !requirements.txt
 
 # Ignore local config/cache
+__pycache__/
 .cache/
 *.nf.cache
 
