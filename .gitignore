@@ -37,6 +37,7 @@ fastq/
 *.tsv
 *.rds
 *.txt
+!requirements.txt
 
 # Ignore local config/cache
 .cache/

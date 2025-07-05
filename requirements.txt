@@ -1,0 +1,4 @@
+pytest
+cyvcf2
+nextflow
+nf-core
