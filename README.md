@@ -29,19 +29,19 @@ flowchart TD
     rnaseq_fastq([Tumor/Normal RNA-seq FASTQ])
 
     %% Processes/Tools
-    sarek{{nf-core/sarek (Mutect2/VEP)}}
-    rnaseq{{nf-core/rnaseq (STAR-Salmon)}}
-    expr_annotator{{vcf-expression-annotator (vatools)}}
-    vcf2csv{{vcf_to_csv.py}}
-    epipred{{epitope_prediction (mhcflurry)}}
-    downstream{{neoantigen_downstream.py}}
+    sarek[nf-core/sarek (Mutect2/VEP)]
+    rnaseq[nf-core/rnaseq (STAR-Salmon)]
+    expr_annotator[vcf-expression-annotator (vatools)]
+    vcf2csv[vcf_to_csv.py]
+    epipred[epitope_prediction (mhcflurry)]
+    downstream[neoantigen_downstream.py]
 
     %% Files/Artifacts
-    vep_vcf([VEP-annotated VCF])
-    expr_vcf([VEP-annotated VCF with Variant Expression])
-    expr_csv([Variant Expression CSV])
-    epi_tsv([Epitope Prediction TSV])
-    final([Final CSVs & Plots])
+    vep_vcf((VEP-annotated VCF))
+    expr_vcf((VEP-annotated VCF with Variant Expression))
+    expr_csv((Variant Expression CSV))
+    epi_tsv((Epitope Prediction TSV))
+    final((Final CSVs & Plots))
 
     %% Workflow
     wes_fastq --> sarek

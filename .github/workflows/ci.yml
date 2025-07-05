@@ -41,4 +41,4 @@ jobs:
         run: |
           npm install -g @mermaid-js/mermaid-cli
           awk '/```mermaid/{flag=1;next}/```/{flag=0}flag' README.md > workflow.mmd
-          mmdc --no-sandbox -i workflow.mmd -o workflow.png
+          mmdc -e '{"args": ["--no-sandbox"]}' -i workflow.mmd -o workflow.png
