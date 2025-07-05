@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+      - bugfix/*
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t neo .
+
+      - name: Run Black
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app neo \
+            sh -c "PYTHONPATH=/app black --check /app"
+
+      - name: Run pytest
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/app neo \
+            sh -c "PYTHONPATH=/app pytest /app"

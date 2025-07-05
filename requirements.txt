@@ -1,0 +1,8 @@
+black
+pytest
+cyvcf2
+mygene
+pandas
+numpy
+matplotlib
+seaborn
