@@ -1,0 +1,2 @@
+sample,fastq_1,fastq_2,seq_type
+SAMPLE_001,/path/to/fastqs/SAMPLE_001_1.fastq.gz,/path/to/fastqs/SAMPLE_001_2.fastq.gz,dna

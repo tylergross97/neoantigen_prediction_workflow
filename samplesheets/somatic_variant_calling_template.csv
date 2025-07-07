@@ -1,0 +1,3 @@
+patient,sex,status,sample,lane,fastq_1,fastq_2
+P001,F,0,SAMPLE_A,1,/path/to/fastqs/SAMPLE_A_1.fastq.gz,/path/to/fastqs/SAMPLE_A_2.fastq.gz
+P001,F,1,SAMPLE_B,1,/path/to/fastqs/SAMPLE_B_1.fastq.gz,/path/to/fastqs/SAMPLE_B_2.fastq.gz
